@@ -8,7 +8,7 @@
             {!! $message->getHTMLBody() !!}
 {{--            {!! $threads = $message->setFetchBodyOption(false)->thread($message->getFolder())[0]->getHTMLBody() !!}--}}
 {{--            {!! $threads[0]->getHTMLBody() !!}--}}
-            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="post" action="{{url('reply-email')}}">
+            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="post" action="{{url('ticket::reply-email')}}">
                 @csrf
                 <input type="hidden" id="messageId" name="messageId" value="{{$message->getMessageId()}}">
                 <input type="hidden" id="references" name="references" value="{{$message->getReferences()}}">
