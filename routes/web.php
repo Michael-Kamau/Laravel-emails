@@ -15,18 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 
 */
-Route::get('/emails', [\App\Http\Controllers\HomeController::class, 'emails']);
-
-
-Route::post('/send-email', [\App\Http\Controllers\HomeController::class, 'sendEmail'])->name('send-email');
-
-
-Route::post('/reply-email', [\App\Http\Controllers\HomeController::class, 'replyEmail'])->name('reply-email');
-
-
-Route::get('/send-email/{messageId?}', [\App\Http\Controllers\HomeController::class, 'sendEmail']);
-
-
 Route::get('/', function () {
 
     return view('welcome');

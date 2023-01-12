@@ -71,12 +71,18 @@ class ReplyEmail extends Mailable
      */
     public function headers()
     {
-        return new Headers(
-//            messageId: $this->messageId,
-            references: isset($this->payload['references']) ? [$this->payload['references'], $this->payload['messageId']] : [],
-            text: [
-                'In-Reply-To' => '<'.$this->payload['messageId'].'>' ?? '',
-            ],
-        );
+        if(!isset($this->payload['messageId'])){
+            return  new Headers(
+            );
+        }
+        else{
+            return new Headers(
+                references: isset($this->payload['references']) ? [$this->payload['references'], $this->payload['messageId'] ?? ''] : [],
+                text: [
+                    'In-Reply-To' => '<'.$this->payload['messageId'].'>'
+                ],
+            );
+        }
+
     }
 }
