@@ -3,6 +3,7 @@
 namespace Modules\Ticket\Http\Controllers;
 
 use App\Mail\ReplyEmail;
+use App\Services\WebklexImapEmailService;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -79,39 +80,10 @@ class TicketController extends Controller
         //
     }
 
-    public function emails()
+    public function emails(WebklexImapEmailService $emailClient): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
 
-        $client = \Webklex\IMAP\Facades\Client::account('default');
-
-
-//Connect to the IMAP Server
-        $client->connect();
-//Get all Mailboxes
-        /** @var \Webklex\IMAP\Support\FolderCollection $aFolder */
-//        $aFolder = $client->getFolders();
-        $aFolder = $client->getFolder('[Gmail]/All Mail');
-
-//        dd($aFolder);
-
-//        foreach ($aFolder as $oFolder)
-//        {
-//
-//        }
-
-
-        $aMessage = $aFolder->query()->setFetchOrderAsc()->since('06.12.2022')->text('Fresh')->get();
-
-//        dd($aMessage->toArray());
-//        error_log(gettype($aMessage));
-
-
-
-
-
-        return view('ticket::emails.emails')->with('messages', $aMessage ?? null)->with('threads', $threads??null);
-
-
+        return view('ticket::emails.emails')->with('messages', $emailClient->allEmails() ?? null)->with('threads', $threads ?? null);
     }
 
 
